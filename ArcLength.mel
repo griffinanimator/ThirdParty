@@ -1,0 +1,12 @@
+global proc ArcLength() {    
+    string $sel[]=`ls -sl`;
+    string $curvename=$sel[0];
+    string $cInfoname=($sel[0]+"Info");
+    string $dummy[]=`listRelatives`;
+    string $shapename=$dummy[0];
+    createNode -n $cInfoname "curveInfo";
+    connectAttr -f ($shapename+".worldSpace[0]") ($cInfoname+".inputCurve");
+    select $curvename;
+    addAttr -ln "arcLength" -k true -at double;
+    connectAttr -f ($cInfoname+".arcLength") ($curvename+".arcLength");
+}
